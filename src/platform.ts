@@ -65,8 +65,6 @@ export class ExampleHomebridgePlatform implements DynamicPlatformPlugin {
       },
     ];
 
-    this.log.debug(this.config);
-
     // loop over the discovered devices and register each one if it has not already been registered
     for (const device of exampleDevices) {
 

@@ -19,7 +19,7 @@ export class ExamplePlatformAccessory {
     Brightness: 100,
     colorTemp: 200,
     saturation: 50,
-    hue: 200
+    hue: 200,
   };
 
   constructor(
@@ -29,9 +29,9 @@ export class ExamplePlatformAccessory {
 
     // set accessory information
     this.accessory.getService(this.platform.Service.AccessoryInformation)!
-      .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Default-Manufacturer')
-      .setCharacteristic(this.platform.Characteristic.Model, 'Default-Model')
-      .setCharacteristic(this.platform.Characteristic.SerialNumber, 'Default-Serial');
+      .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Julianitow')
+      .setCharacteristic(this.platform.Characteristic.Model, 'light')
+      .setCharacteristic(this.platform.Characteristic.SerialNumber, 'S/N75014');
 
     // get the LightBulb service if it exists, otherwise create a new LightBulb service
     // you can create multiple services for each accessory
@@ -69,12 +69,12 @@ export class ExamplePlatformAccessory {
   async setOn(value: CharacteristicValue) {
     // implement your own code to turn your device on/off
     this.exampleStates.On = value as boolean;
-    this.platform.log.debug('Set Characteristic On ->', value);
+    this.platform.log.info(this.accessory.displayName, ': set Characteristic On ->', value);
   }
 
   async setSaturation(value: CharacteristicValue) {
     this.exampleStates.saturation = value as number;
-    this.platform.log.debug('Set saturation ->', value);
+    this.platform.log.info(this.accessory.displayName, ': set saturation ->', value);
   }
 
   async getSaturation(): Promise<CharacteristicValue> {
@@ -82,17 +82,18 @@ export class ExamplePlatformAccessory {
   }
 
   async setHue(value: CharacteristicValue) {
+    this.platform.log.info(this.accessory.displayName, ': set hue light ->', value);
     this.exampleStates.hue = value as number;
-    this.platform.log.debug('Set hue light ->', value);
   }
 
   async getHue(): Promise<CharacteristicValue> {
-    return  this.exampleStates.hue
+    return this.exampleStates.hue;
   }
 
   async setColorTemp(value: CharacteristicValue) {
     this.exampleStates.colorTemp = value as number;
-    this.platform.log.debug('Set color temp ->', value);
+    this.platform.log.info(this.accessory.displayName, ': set temperature light ->', value);
+    this.platform.log.info('Set color temp ->', value);
   }
 
   async getColorTemp(): Promise<CharacteristicValue> {
@@ -102,7 +103,7 @@ export class ExamplePlatformAccessory {
   async getOn(): Promise<CharacteristicValue> {
     // implement your own code to check if the device is on
     const isOn = this.exampleStates.On;
-    this.platform.log.debug('Get Characteristic On ->', isOn);
+    this.platform.log.info('Get Characteristic On ->', isOn);
 
     // if you need to return an error to show the device as "Not Responding" in the Home app:
     // throw new this.platform.api.hap.HapStatusError(this.platform.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE);
@@ -111,9 +112,8 @@ export class ExamplePlatformAccessory {
   }
 
   async setBrightness(value: CharacteristicValue) {
-    // implement your own code to set the brightness
+    this.platform.log.info(this.accessory.displayName, ': set brightness ->', value);
     this.exampleStates.Brightness = value as number;
-    this.platform.log.debug('Set Characteristic Brightness -> ', value);
   }
 
 }
